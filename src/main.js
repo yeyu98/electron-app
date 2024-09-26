@@ -2,12 +2,13 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:21:28
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-26 15:46:49
+ * @LastEditTime: 2024-09-26 16:53:16
  * @FilePath: \electron-app\src\main.js
  * @Description: 
  */
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog} = require('electron')
 const path = require('node:path')
+require('./index')
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -17,14 +18,23 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'), // 把 preload.js 加载进来
     }
   })
+  win.webContents.openDevTools()
 
   // NOTE 加载的时候需要使用path加载否则会出错
   win.loadFile(path.join(__dirname, '../index.html')) 
 }
 
 app.whenReady().then(() => {
-  createWindow()
+  ipcMain.handle('ping', () => 'pong')
+  ipcMain.handle('getTitle', () => 'First electron!')
+  ipcMain.handle('dialog:openFile', async() => {
+    const { canceled, filePaths } = await dialog.showOpenDialog()
+    if(!canceled) {
+      return filePaths[0]
+    }
+  })
 
+  createWindow()
   // macos 如果没有窗口则创建一个
   app.on('activate', () => {
     if(BrowserWindow.getAllWindows().length === 0) {

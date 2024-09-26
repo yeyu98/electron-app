@@ -1,9 +1,11 @@
-const { contextBridge } = require('electron')
+const { contextBridge, ipcRenderer } = require('electron')
 
 // 向窗口window注入versions属性
-console.log(process.versions.node)
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
-  electron: () => process.versions.electron
+  electron: () => process.versions.electron,
+  ping: () => ipcRenderer.invoke('ping'), // 注入ping方法
+  getTitle: () => ipcRenderer.invoke('getTitle'), // 注入setTitle方法
+  openFile: () => ipcRenderer.invoke('dialog:openFile')
 })
