@@ -6,7 +6,8 @@
  * @FilePath: \electron-app\README.md
  * @Description: 
 -->
-### 关于安装electron
+### 安装
+pnpm i electron --save-dev
 需要指定一下electron镜像源 pnpm config set electron_mirror "https://registry.npmmirror.com/-/binary/electron/"
 
 
