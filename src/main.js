@@ -2,7 +2,7 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:21:28
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-26 16:53:16
+ * @LastEditTime: 2024-09-26 17:24:31
  * @FilePath: \electron-app\src\main.js
  * @Description: 
  */
@@ -19,6 +19,13 @@ const createWindow = () => {
     }
   })
   win.webContents.openDevTools()
+
+  ipcMain.on('set-title', (event, title) => {
+    // 窗口可能存在多个，这里需要知道是哪个窗口发送过来的信息
+    const webContents = event.sender
+    const win = BrowserWindow.fromWebContents(webContents)
+    win.setTitle(title)
+  })
 
   // NOTE 加载的时候需要使用path加载否则会出错
   win.loadFile(path.join(__dirname, '../index.html')) 

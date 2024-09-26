@@ -4,7 +4,8 @@
   "description": "This is an electron app.",
   "main": "src/main.js",
   "scripts": {
-    "dev": "electron ."
+    "dev": "electron .",
+    "debug": "electron --inspect=5858 ."
   },
   "keywords": [],
   "author": "Ace",

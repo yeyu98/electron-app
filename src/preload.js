@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld('versions', {
   electron: () => process.versions.electron,
   ping: () => ipcRenderer.invoke('ping'), // 注入ping方法
   getTitle: () => ipcRenderer.invoke('getTitle'), // 注入setTitle方法
-  openFile: () => ipcRenderer.invoke('dialog:openFile')
+  openFile: () => ipcRenderer.invoke('dialog:openFile'),
+  setTitle: (title) => ipcRenderer.send('set-title', title)
 })

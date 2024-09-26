@@ -2,7 +2,7 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:16:03
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-26 17:01:45
+ * @LastEditTime: 2024-09-26 17:13:21
  * @FilePath: \electron-app\README.md
  * @Description: 
 -->
@@ -38,10 +38,11 @@ ipc通信
 ipcMain：向渲染器发送信息；
 ipcRenderer：注册主进程中的方法；
 
-单向通信
+单向通信 （可能目前理解的还不够深暂时先放一下） 渲染进程 --->>> 主进程
+ipcRenderer.send
+ipcMain.on
 
-
-双向通信 主进程 --->>> 渲染进程
+双向通信（文档说是双向的但我感觉更像是单向的...可能目前理解的还不够深  暂时先放一下） 主进程 --->>> 渲染进程
 在主进程中调用 ipcMain.handle('xxx', () => {})
 在preload中使用 ipcRenderer.invoke('xxx') 向渲染进程中注入
 渲染进程中调用 window.xxx
