@@ -2,20 +2,41 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:21:28
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-26 14:41:33
+ * @LastEditTime: 2024-09-26 15:46:49
  * @FilePath: \electron-app\src\main.js
  * @Description: 
  */
 const { app, BrowserWindow } = require('electron')
+const path = require('node:path')
 
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
-    height: 600
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'), // 把 preload.js 加载进来
+    }
   })
-  win.loadFile('../index.html')  
+
+  // NOTE 加载的时候需要使用path加载否则会出错
+  win.loadFile(path.join(__dirname, '../index.html')) 
 }
 
 app.whenReady().then(() => {
   createWindow()
+
+  // macos 如果没有窗口则创建一个
+  app.on('activate', () => {
+    if(BrowserWindow.getAllWindows().length === 0) {
+      createWindow()
+    }
+  })
 }) 
+
+// 关闭应用退出窗口
+app.on('window-all-closed', () => {
+  // darwin macos标识
+  if(process.platform !== 'darwin') {
+    app.quit()
+  }
+})
