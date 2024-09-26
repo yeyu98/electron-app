@@ -58,3 +58,9 @@ try {
   console.log(err)
 }
 ```
+
+
+
+### 调试
+使用vscode调试主进程
+https://www.electron.js.cn/docs/latest/tutorial/debugging-vscode
