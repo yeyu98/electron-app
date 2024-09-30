@@ -2,11 +2,11 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:21:28
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-26 17:24:31
+ * @LastEditTime: 2024-09-30 11:57:33
  * @FilePath: \electron-app\src\main.js
  * @Description: 
  */
-const { app, BrowserWindow, ipcMain, dialog} = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, nativeTheme} = require('electron')
 const path = require('node:path')
 require('./index')
 
@@ -27,6 +27,12 @@ const createWindow = () => {
     win.setTitle(title)
   })
 
+  // NOTE 注册重置系统主题事件
+  ipcMain.on('dark-mode:system', () => {
+    console.log('重置')
+    nativeTheme.themeSource = 'system'
+  })
+
   // NOTE 加载的时候需要使用path加载否则会出错
   win.loadFile(path.join(__dirname, '../index.html')) 
 }
@@ -38,6 +44,15 @@ app.whenReady().then(() => {
     const { canceled, filePaths } = await dialog.showOpenDialog()
     if(!canceled) {
       return filePaths[0]
+    }
+  })
+
+  // NOTE 注册切换主题事件
+  ipcMain.handle('dark-mode:toggle', (_, isLight = true, ...args) => {
+    if(isLight) {
+      nativeTheme.themeSource = 'light'
+    } else {
+      nativeTheme.themeSource = 'dark'
     }
   })
 

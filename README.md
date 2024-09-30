@@ -2,7 +2,7 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:16:03
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-30 11:10:59
+ * @LastEditTime: 2024-09-30 11:29:36
  * @FilePath: \electron-app\README.md
  * @Description: 
 -->
@@ -66,6 +66,7 @@ try {
 使用vscode调试主进程
 https://www.electron.js.cn/docs/latest/tutorial/debugging-vscode
 
+
 ### 打包
 这里打包的技术选型使用的是electron-builder
 在使用electron-builder打包的时候出现了如下问题，其本质上是因为网络问题导致github上的东西无法下载成功
@@ -74,3 +75,22 @@ https://www.electron.js.cn/docs/latest/tutorial/debugging-vscode
 解决方法是：手动点击这个链接，手动下载压缩包放到 C:\Users\houyi\AppData\Local\electron-builder\Cache\nsis 目录下解压即可
 
 ![alt text](./assets/readme-images/image-1.png)
+
+
+### 过一下官网示例
+
+#### Dark Mode
+
+浏览器内使用 媒体查询属性 `prefers-color-scheme` 实现，以下代码等同于当系统指定的light呈现以下样式...
+```
+@media (prefers-color-scheme: light) {
+
+}
+```
+
+```
+@media (prefers-color-scheme: dark) {
+  
+}
+```
+`color-scheme`：允许元素手动指示它可以舒适地呈现哪些颜色方案。

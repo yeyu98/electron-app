@@ -10,3 +10,9 @@ contextBridge.exposeInMainWorld('versions', {
   openFile: () => ipcRenderer.invoke('dialog:openFile'),
   setTitle: (title) => ipcRenderer.send('set-title', title)
 })
+
+contextBridge.exposeInMainWorld('native', {
+  toggleTheme: (isLight) => ipcRenderer.invoke('dark-mode:toggle', isLight),
+  resetSetting: () => ipcRenderer.send('dark-mode:system'),
+  getRequire: () => require
+})

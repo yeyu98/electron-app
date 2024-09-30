@@ -12,15 +12,20 @@
       content="default-src 'self'; script-src 'self'"
     />
     <title>Hello from Electron renderer!</title>
+    <link rel="stylesheet" href="./src/styles.css">
   </head>
   <body>
     <h1>Hello from Electron renderer!</h1>
     <p>👋</p>
     <p class="versions"></p>
     <button class="btn">openFile</button>
-
     <input class="input" type="text">
     <button class="change">设置标题</button>
+    <br />
+    <br />
+
+    <button class="toggle-theme">切换暗黑模式</button>
+    <button class="reset-setting">重置系统设置</button>
     <script src="./src/renderer.js"></script>
   </body>
 </html>
