@@ -2,11 +2,11 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:21:28
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-30 11:57:33
+ * @LastEditTime: 2024-09-30 17:08:46
  * @FilePath: \electron-app\src\main.js
  * @Description: 
  */
-const { app, BrowserWindow, ipcMain, dialog, nativeTheme} = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, nativeTheme, Menu, MenuItem} = require('electron')
 const path = require('node:path')
 require('./index')
 
@@ -36,6 +36,23 @@ const createWindow = () => {
   // NOTE 加载的时候需要使用path加载否则会出错
   win.loadFile(path.join(__dirname, '../index.html')) 
 }
+
+const appendMenu = () => {
+  const menu = new Menu()
+  menu.append(new MenuItem({
+    label: 'Electron',
+    submenu: [{
+      role: 'help',
+      accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
+      click: () => {
+        console.log('Electron rocks!')
+      }
+    }]
+  }))
+  Menu.setApplicationMenu(menu)
+}
+
+appendMenu()
 
 app.whenReady().then(() => {
   ipcMain.handle('ping', () => 'pong')
