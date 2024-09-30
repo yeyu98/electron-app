@@ -2,7 +2,7 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 15:42:19
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-30 14:15:11
+ * @LastEditTime: 2024-09-30 16:17:57
  * @FilePath: \electron-app\src\renderer.js
  * @Description: 
  */
@@ -51,8 +51,8 @@ window.onload = async () => {
     window.native.resetSetting()
   })
 
-
-
+  // 2 设备访问（暂放）
+  // 3 键盘快捷键
 
 
 
