@@ -8,6 +8,19 @@
     "build": "electron-builder",
     "debug": "electron --inspect=5858 ."
   },
+  "build": {
+    "productName": "electron-app",
+    "appId": "electron-app",
+    "win": {
+      "icon": "./icon/icon.png",
+      "artifactName": "${productName}-${platform}-${version}.${ext}"
+    },
+    "mac": {
+      "icon": "./icon/icon.png",
+      "artifactName": "${productName}-${platform}-${version}.${ext}",
+      "category": "com.app.electron-app.type"
+    }
+  },
   "keywords": [],
   "author": "Ace",
   "license": "ISC",
