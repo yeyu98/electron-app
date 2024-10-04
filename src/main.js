@@ -2,11 +2,12 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:21:28
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-30 17:08:46
+ * @LastEditTime: 2024-10-04 10:46:43
  * @FilePath: \electron-app\src\main.js
  * @Description: 
  */
-const { app, BrowserWindow, ipcMain, dialog, nativeTheme, Menu, MenuItem} = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, nativeTheme} = require('electron')
+const { loadLocalShortCut, loadGlobalShortCut } = require('./demo/shortCut')
 const path = require('node:path')
 require('./index')
 
@@ -20,6 +21,8 @@ const createWindow = () => {
   })
   win.webContents.openDevTools()
 
+
+  /*************注册事件****************/ 
   ipcMain.on('set-title', (event, title) => {
     // 窗口可能存在多个，这里需要知道是哪个窗口发送过来的信息
     const webContents = event.sender
@@ -32,29 +35,25 @@ const createWindow = () => {
     console.log('重置')
     nativeTheme.themeSource = 'system'
   })
+  /*************注册事件****************/ 
 
   // NOTE 加载的时候需要使用path加载否则会出错
   win.loadFile(path.join(__dirname, '../index.html')) 
+  // 拦截keyup、keydown事件
+  win.webContents.on('before-input-event', (event, input) => {
+    if (input.control && input.key.toLowerCase() === 'o') {
+      console.log('Pressed Control+I')
+      event.preventDefault()
+    }
+  })
 }
 
-const appendMenu = () => {
-  const menu = new Menu()
-  menu.append(new MenuItem({
-    label: 'Electron',
-    submenu: [{
-      role: 'help',
-      accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
-      click: () => {
-        console.log('Electron rocks!')
-      }
-    }]
-  }))
-  Menu.setApplicationMenu(menu)
-}
-
-appendMenu()
+// 加载本地快捷键无需等待app启动
+loadLocalShortCut()
 
 app.whenReady().then(() => {
+
+  /*************ipc通信****************/ 
   ipcMain.handle('ping', () => 'pong')
   ipcMain.handle('getTitle', () => 'First electron!')
   ipcMain.handle('dialog:openFile', async() => {
@@ -65,14 +64,20 @@ app.whenReady().then(() => {
   })
 
   // NOTE 注册切换主题事件
-  ipcMain.handle('dark-mode:toggle', (_, isLight = true, ...args) => {
-    if(isLight) {
+  ipcMain.handle('dark-mode:toggle', () => {
+    if(nativeTheme.shouldUseDarkColors) {
       nativeTheme.themeSource = 'light'
     } else {
       nativeTheme.themeSource = 'dark'
     }
+    // return nativeTheme.shouldUseDarkColors
   })
+  /*************ipc通信****************/ 
 
+  // NOTE 注册全局快捷键
+  loadGlobalShortCut()
+
+  // NOTE 创建窗口
   createWindow()
   // macos 如果没有窗口则创建一个
   app.on('activate', () => {

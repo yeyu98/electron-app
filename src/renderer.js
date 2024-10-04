@@ -2,7 +2,7 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 15:42:19
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-30 16:17:57
+ * @LastEditTime: 2024-10-04 10:49:25
  * @FilePath: \electron-app\src\renderer.js
  * @Description: 
  */
@@ -36,14 +36,11 @@ window.onload = async () => {
 
   /**************** 示例专用 ***********************/ 
   // 1 Dark Mode
-  let isLight = true
   const toggleTheme = document.querySelector('.toggle-theme')
   const resetSetting = document.querySelector('.reset-setting')
   
   toggleTheme.addEventListener('click', () => {
-    isLight = !isLight
-    console.log(isLight)
-    window.native.toggleTheme(isLight)
+    window.native.toggleTheme()
   })
   
   resetSetting.addEventListener('click', () => {
@@ -53,6 +50,9 @@ window.onload = async () => {
 
   // 2 设备访问（暂放）
   // 3 键盘快捷键
+  window.addEventListener('keyup', (event) => { 
+    console.log(`You pressed ${event.key}`)
+  }, true)
   
 
 

@@ -2,14 +2,16 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:16:03
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-09-30 11:29:36
+ * @LastEditTime: 2024-10-04 10:50:38
  * @FilePath: \electron-app\README.md
  * @Description: 
 -->
 ### 安装
 pnpm i electron --save-dev
-需要指定一下electron镜像源 pnpm config set electron_mirror "https://registry.npmmirror.com/-/binary/electron/"
-
+需要指定一下electron镜像源 
+```
+pnpm config set electron_mirror "https://registry.npmmirror.com/-/binary/electron/"
+```
 
 ## 模块
 ### 生命周期
@@ -94,3 +96,12 @@ https://www.electron.js.cn/docs/latest/tutorial/debugging-vscode
 }
 ```
 `color-scheme`：允许元素手动指示它可以舒适地呈现哪些颜色方案。
+
+### 快捷键
+#### 本地快捷键
+注册快捷键需要依托menu注册且需要在应用被聚焦时才会触发；
+#### 全局快捷键
+注册全局快捷键需要等待app ready之后通过globalShortcut注册，无需聚焦也会触发，比如应用被隐藏时；
+#### 浏览器快捷键
+没什么好说的，keyup、keydown等事件；
+但是可以通过webContents before-input-event来拦截浏览器的事件
