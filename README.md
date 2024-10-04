@@ -2,7 +2,7 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:16:03
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-10-04 10:57:22
+ * @LastEditTime: 2024-10-04 10:58:55
  * @FilePath: \electron-app\README.md
  * @Description: 
 -->
@@ -102,3 +102,6 @@ https://www.electron.js.cn/docs/latest/tutorial/debugging-vscode
 注册快捷键需要依托menu注册且需要在应用被聚焦时才会触发；
 #### 全局快捷键
 注册全局快捷键需要等待app ready之后通过globalShortcut注册，无需聚焦也会触发，比如应用被隐藏时；
+#### 浏览器快捷键
+没什么好说的，keyup、keydown等事件；
+但是可以通过webContents before-input-event来拦截浏览器的事件
