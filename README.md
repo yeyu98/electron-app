@@ -2,7 +2,7 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:16:03
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-10-04 10:58:55
+ * @LastEditTime: 2024-10-04 11:07:31
  * @FilePath: \electron-app\README.md
  * @Description: 
 -->
@@ -105,3 +105,5 @@ https://www.electron.js.cn/docs/latest/tutorial/debugging-vscode
 #### 浏览器快捷键
 没什么好说的，keyup、keydown等事件；
 但是可以通过webContents before-input-event来拦截浏览器的事件
+
+### 拖拽

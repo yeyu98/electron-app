@@ -14,5 +14,6 @@ contextBridge.exposeInMainWorld('versions', {
 contextBridge.exposeInMainWorld('native', {
   toggleTheme: (isLight) => ipcRenderer.invoke('dark-mode:toggle', isLight),
   resetSetting: () => ipcRenderer.send('dark-mode:system'),
-  getRequire: () => require
+  getRequire: () => require,
+  startDrag: (filename) => ipcRenderer.send('ondragstart', filename)
 })

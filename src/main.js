@@ -2,12 +2,13 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:21:28
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-10-04 10:46:43
+ * @LastEditTime: 2024-10-04 11:40:17
  * @FilePath: \electron-app\src\main.js
  * @Description: 
  */
 const { app, BrowserWindow, ipcMain, dialog, nativeTheme} = require('electron')
 const { loadLocalShortCut, loadGlobalShortCut } = require('./demo/shortCut')
+const { registerDragFile } = require('./demo/dragFile')
 const path = require('node:path')
 require('./index')
 
@@ -20,22 +21,6 @@ const createWindow = () => {
     }
   })
   win.webContents.openDevTools()
-
-
-  /*************注册事件****************/ 
-  ipcMain.on('set-title', (event, title) => {
-    // 窗口可能存在多个，这里需要知道是哪个窗口发送过来的信息
-    const webContents = event.sender
-    const win = BrowserWindow.fromWebContents(webContents)
-    win.setTitle(title)
-  })
-
-  // NOTE 注册重置系统主题事件
-  ipcMain.on('dark-mode:system', () => {
-    console.log('重置')
-    nativeTheme.themeSource = 'system'
-  })
-  /*************注册事件****************/ 
 
   // NOTE 加载的时候需要使用path加载否则会出错
   win.loadFile(path.join(__dirname, '../index.html')) 
@@ -62,7 +47,6 @@ app.whenReady().then(() => {
       return filePaths[0]
     }
   })
-
   // NOTE 注册切换主题事件
   ipcMain.handle('dark-mode:toggle', () => {
     if(nativeTheme.shouldUseDarkColors) {
@@ -70,8 +54,24 @@ app.whenReady().then(() => {
     } else {
       nativeTheme.themeSource = 'dark'
     }
-    // return nativeTheme.shouldUseDarkColors
   })
+
+  ipcMain.on('set-title', (event, title) => {
+    // 窗口可能存在多个，这里需要知道是哪个窗口发送过来的信息
+    const webContents = event.sender
+    const win = BrowserWindow.fromWebContents(webContents)
+    win.setTitle(title)
+  })
+  // NOTE 注册重置系统主题事件
+  ipcMain.on('dark-mode:system', () => {
+    console.log('重置')
+    nativeTheme.themeSource = 'system'
+  })
+  registerDragFile()
+  /*************ipc通信****************/ 
+
+
+  
   /*************ipc通信****************/ 
 
   // NOTE 注册全局快捷键

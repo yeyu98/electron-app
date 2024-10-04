@@ -2,7 +2,7 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 15:42:19
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-10-04 10:49:25
+ * @LastEditTime: 2024-10-04 11:41:06
  * @FilePath: \electron-app\src\renderer.js
  * @Description: 
  */
@@ -53,10 +53,19 @@ window.onload = async () => {
   window.addEventListener('keyup', (event) => { 
     console.log(`You pressed ${event.key}`)
   }, true)
-  
+  // 拖拽
+  const drag1 = document.querySelector('.drag1')
+  const drag2 = document.querySelector('.drag2')
 
+  drag1.addEventListener('dragstart', (event) => {
+    event.preventDefault()
+    window.native.startDrag('drag-1.md')
+  })
 
-
+  drag2.addEventListener('dragstart', (event) => {
+    event.preventDefault()
+    window.native.startDrag('drag-2.md')
+  })
 
 
 
