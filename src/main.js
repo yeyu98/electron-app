@@ -2,15 +2,17 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:21:28
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-10-04 11:40:17
+ * @LastEditTime: 2024-10-10 16:42:02
  * @FilePath: \electron-app\src\main.js
  * @Description: 
  */
-const { app, BrowserWindow, ipcMain, dialog, nativeTheme} = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, nativeTheme, nativeImage} = require('electron')
 const { loadLocalShortCut, loadGlobalShortCut } = require('./demo/shortCut')
 const { registerDragFile } = require('./demo/dragFile')
 const path = require('node:path')
 require('./index')
+
+const icon = nativeImage.createFromPath(path.join(__dirname, '../assets/icon/icon.png'))
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -18,7 +20,8 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'), // 把 preload.js 加载进来
-    }
+    },
+    icon
   })
   win.webContents.openDevTools()
 

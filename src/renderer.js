@@ -68,7 +68,11 @@ window.onload = async () => {
   })
 
 
-
+  // 截屏
+  const screenshot = document.querySelector('.screenshot')
+  screenshot.addEventListener('click', () => {
+    console.log('截屏')
+  })
 
 
 
