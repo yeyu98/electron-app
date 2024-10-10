@@ -2,11 +2,11 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 14:21:28
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-10-10 16:42:02
+ * @LastEditTime: 2024-10-10 17:32:06
  * @FilePath: \electron-app\src\main.js
  * @Description: 
  */
-const { app, BrowserWindow, ipcMain, dialog, nativeTheme, nativeImage} = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, nativeTheme, nativeImage, screen, desktopCapturer} = require('electron')
 const { loadLocalShortCut, loadGlobalShortCut } = require('./demo/shortCut')
 const { registerDragFile } = require('./demo/dragFile')
 const path = require('node:path')
@@ -72,7 +72,27 @@ app.whenReady().then(() => {
   })
   registerDragFile()
   /*************ipc通信****************/ 
+  ipcMain.handle('getScreenShot', () => {
+    return new Promise((resolve, reject) => {
+      const display = screen.getPrimaryDisplay()
+      const scale = display.scaleFactor
+      console.log('🥳🥳🥳 ~~ returnnewPromise ~~ display.bounds.width * scale--->>>', display.bounds.width * scale)
 
+      desktopCapturer.getSources({
+        types: ['screen'],
+        thumbnailSize: {
+          width: display.bounds.width * scale,
+          height: display.bounds.height * scale,
+        }
+      }).then(sources => {
+        const source = sources[0]
+        const base64 = source.thumbnail.toDataURL('image/png')
+        resolve(base64)
+      }).catch(err => {
+        console.log("err --->>>", err)
+      })
+    })
+  })
 
   
   /*************ipc通信****************/ 

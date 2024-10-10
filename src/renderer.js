@@ -2,7 +2,7 @@
  * @Author: yeyu98
  * @Date: 2024-09-26 15:42:19
  * @LastEditors: yeyu98
- * @LastEditTime: 2024-10-04 11:41:06
+ * @LastEditTime: 2024-10-10 17:34:40
  * @FilePath: \electron-app\src\renderer.js
  * @Description: 
  */
@@ -72,6 +72,12 @@ window.onload = async () => {
   const screenshot = document.querySelector('.screenshot')
   screenshot.addEventListener('click', () => {
     console.log('截屏')
+    window.native.getScreenShot().then(base64 => {
+      console.log('🥳🥳🥳 ~~ window.native.getScreenShot ~~ base64--->>>', base64)
+      const image = new Image(500, 250)
+      image.src = base64
+      document.body.appendChild(image)
+    })
   })
 
 
